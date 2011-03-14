@@ -1,0 +1,44 @@
+# status
+
+vnc viewer only, has limitations with key events and zrle encoding.
+
+
+# intro
+
+wm/vncv is a vnc viewer.  vnc uses the rfb (remote frame buffer)
+protocol.  see the manual page for details, or try:
+
+	wm/vncv hostname
+
+
+# install
+
+make sure $ROOT is set.  now "mk install" to compile and install the
+files.
+
+when building from within inferno, insert SYSHOST=Inferno and ROOT=
+in the mk invocations to override the values in the mkconfig.
+
+
+# latest version
+
+the latest version can be found at:
+
+    http://www.ueber.net/code/r/vnc
+
+
+# licence & author
+
+all files are in the public domain.  this code has been written by
+mechiel lukkien, reachable at mechiel@ueber.net.
+
+
+# todo
+
+- support color maps?  only true color (varying depths) is supported now.
+- show smaller cursor (mouse pointer) when over vnc fb and drawing local mouse
+- use factotum for auth
+- fix zrle encoding (may be due to inflate, it needs to flush output before asking new input, the stream never terminates)
+- better x11 keysym translation
+- get control/shift/alt/function etc keys.  from tk or use a different approach.
+- find utf-8/unicode extensions for copy/paste text from/to remote.  it's all latin1 now.

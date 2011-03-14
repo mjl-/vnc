@@ -1,0 +1,24 @@
+<../../mkconfig
+
+TARG=\
+	vncv.dis\
+
+SYSMODULES=\
+	arg.m\
+	bufio.m\
+	convcs.m\
+	daytime.m\
+	dial.m\
+	draw.m\
+	filter.m\
+	keyboard.m\
+	keyring.m\
+	string.m\
+	sys.m\
+	tk.m\
+	tkclient.m\
+	vnc.m\
+
+DISBIN=$ROOT/dis/wm
+
+<$ROOT/mkfiles/mkdis

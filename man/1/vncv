@@ -1,0 +1,115 @@
+.TH VNCV 1
+.SH NAME
+vncv \- vnc viewer
+.SH SYNOPSIS
+.B wm/vnvc
+[
+.B -d
+] [
+.B -e
+.I encoding
+] [
+.B -p
+.I [l]RGBNNN
+] [
+.B -w
+.I 8|16|24
+] [
+.B -S
+] [
+.B -l
+.I [addr]
+|
+.I addr
+]
+.SH DESCRIPTION
+.B Vncv
+connects to the remote vnc server at
+.IR addr
+and shows the remote display locally.
+Mouse and key events are sent to the server.  Updates to the display
+are received and shown.  Snarf buffers can also be exchanged.
+.PP
+Options:
+.TP
+.B -d
+Print debugging messages.
+.TP
+.BI -e " encoding"
+Allow use of
+.IR encoding
+for framebuffer updates.
+This option can be specified multiple times.
+The following encodings are implemented:
+.IR raw ,
+.IR copyrect ,
+.IR rre ,
+.IR hextile ,
+.IR localcursor ,
+.IR resize .
+.I Localcursor
+and
+.I resize
+are pseudo-encodings.
+.I Raw
+is always implicitly allowed, it causes rectangular updates to be send as uncompressed pixels.
+.I Copyrect
+updates contain a source and destination rectangle, allowing the local copy of the framebuffer to be updated without transmitting pixels.
+.I Rre
+and
+.I hextile
+are more bandwidth-efficient encodings, using run-length encoding and dividing rectangular framebuffer updates into tiles and encoding those.
+With
+.IR localcursor ,
+the vnc server does not send framebuffer updates for mouse movements.
+Instead, vncv draws the mouse pointer itself.
+The vnc server does send the cursor image when it changes.
+With
+.IR resize , 
+the vnc server send the new resolution when it is changed, instead of disconnecting.
+.TP
+.BI -p " [l]RGBNNN"
+Specify the on-the-wire pixel format to use.
+.I RGB
+must contain the characters `r', `g' and `b'.  It specifies the order of the color components.
+.I NNN
+must be three digits between 0 and 8, setting the width of the color components.  The sum of the widths must be either 8, 16 or 24.
+The optional leading `l' sets the byte order of the pixel format to little endian.
+By default, vncv does not request a pixel format and accepts the format suggested by the server.  
+.TP
+.BI -w " 8|16|24"
+Shortcuts for
+.BR -p :
+.I 8
+for `lbgr233',
+.I 16
+for `lbgr556' and
+.I 24 for `lrgb888'.
+.TP
+.B -S
+Do not ask the vnc server to disconnect other connected clients, i.e. do not disable `shared' mode.
+.TP
+.B -l
+Instead of dialing
+.IR addr ,
+announce and listen on the address allowing the vnc server to initiate the connection.
+The default port for dialing addresses is 5900, the default port for announcing addresses is 5500.
+With
+.BR -l ,
+.I addr
+may be absent in which case `*' is used.
+.SH SOURCE
+.B /appl/wm/vncv.b
+.br
+.SH SEE ALSO
+RFC6143, `The Remote Framebuffer Protocol'.
+.SH BUGS
+Vnc authentication uses weak cryptography.
+.PP
+Tk does not give detailed keyboard events, such as presses and releases of control, alt and shift keys.  Also, not all keyboard characters are translated properly.
+.PP
+Authentication should be handled by factotum.
+.PP
+Color maps in the on-the-wire protocol are not yet implemented.
+.PP
+Only latin-1 text encoding for snarf buffers is supported by the protocol.
