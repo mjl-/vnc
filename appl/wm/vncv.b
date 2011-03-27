@@ -37,7 +37,6 @@ include "tk.m";
 	tk: Tk;
 include "tkclient.m";
 	tkclient: Tkclient;
-include "vnc.m";
 
 Vncv: module {
 	init:	fn(ctxt: ref Draw->Context, argv: list of string);

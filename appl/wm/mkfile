@@ -17,7 +17,6 @@ SYSMODULES=\
 	sys.m\
 	tk.m\
 	tkclient.m\
-	vnc.m\
 
 DISBIN=$ROOT/dis/wm
 
